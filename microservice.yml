@@ -19,8 +19,6 @@ spec:
         image: avidhiman8/simple-time-service:v1
         ports:
         - containerPort: 8080
-        
-        # Resource management for cluster stability
         resources:
           limits:
             cpu: "250m"
@@ -28,25 +26,21 @@ spec:
           requests:
             cpu: "100m"
             memory: "128Mi"
-            
-        # Self-healing: restarts pod if app hangs
+        # Restarts pod if app hangs
         livenessProbe:
           httpGet:
             path: /
             port: 8080
           initialDelaySeconds: 10
           periodSeconds: 15
-          
-        # Traffic control: only sends traffic when app is ready
+        # Only sends traffic once app is ready
         readinessProbe:
           httpGet:
             path: /
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 10
-
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
