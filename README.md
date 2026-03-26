@@ -1,17 +1,17 @@
-Particle41 DevOps Challenge: SimpleTimeService
+# Particle41 DevOps Challenge: SimpleTimeService
+
 This project is my submission for the Particle41 DevOps Team Challenge. It automates the deployment of a containerized Python microservice onto a highly available AWS EKS cluster using Terraform.
 
-What's Inside?
-SimpleTimeService: A minimalist Python/Flask app that returns a JSON response with the current timestamp and the requester's IP.
+## What's Inside?
 
-Infrastructure: A custom VPC with 2 public and 2 private subnets across multiple AZs.
+* **SimpleTimeService**: A minimalist Python/Flask app that returns a JSON response with the current timestamp and the requester's IP.
+* **Infrastructure**: A custom VPC with 2 public and 2 private subnets across multiple AZs. 
+* **Orchestration**: AWS EKS (v1.31) with worker nodes residing strictly in private subnets for better security.
+* **Security Focus**: The application runs as a **non-root user** inside the container, and the EKS cluster uses modern **Access Entries** for IAM-to-K8s authentication.
 
-Orchestration: AWS EKS (v1.31) with worker nodes residing strictly in private subnets for better security.
+## Project Structure
 
-Security Focus: The application runs as a non-root user inside the container, and the EKS cluster uses modern Access Entries for IAM-to-K8s authentication.
-
-Project Structure
-Plaintext
+```text
 .
 ├── app/
 │   ├── main.py            # Flask application
@@ -22,7 +22,9 @@ Plaintext
 │   ├── variables.tf       # Parameter definitions
 │   └── terraform.tfvars   # Custom values (Region, CIDRs, etc.)
 └── microservice.yml       # K8s Deployment & Service (ClusterIP)
-Prerequisites
+
+
+## Prerequisites
 Before starting, ensure you have the following installed and configured:
 
 AWS CLI: Configured with valid credentials (aws configure).
