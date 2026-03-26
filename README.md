@@ -213,3 +213,12 @@ git commit -m "docs: finalize professional readme with deployment details"
 git push origin main
 ```
 >>>>>>> 96e8046 (chore: sync repo and add CI/CD pipeline)
+
+
+## Troubleshooting & Lessons Learned
+
+* **EKS Versioning**: Initially attempted a skip-version upgrade from 1.29 to 1.31. Learned that EKS requires sequential minor version upgrades. Resolved by redeploying a fresh 1.31 cluster for this challenge.
+* **GitHub Permissions**: Encountered a 'refusing to update workflow' error when pushing the CI/CD pipeline. Resolved by elevating the Personal Access Token (PAT) scope to include `workflow` permissions.
+* **Storage**: Handled local disk space issues on the terraform controller by cleaning up Docker cache and unused volumes during the build process.
+
+END >>>>>>>>
