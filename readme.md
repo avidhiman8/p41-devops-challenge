@@ -65,7 +65,7 @@ kubectl apply -f microservice.yml
 # 4. Verify & Test
 Since the service is a ClusterIP (internal only), use port-forwarding to test it from your local machine:
 
-Bash
+
 
 ```
 # Check if pods are running
