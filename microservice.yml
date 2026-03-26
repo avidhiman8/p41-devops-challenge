@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-time-service
+  labels:
+    app: time-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: time-service
+  template:
+    metadata:
+      labels:
+        app: time-service
+    spec:
+      containers:
+      - name: time-service
+        image: avidhiman8/simple-time-service:v1
+        ports:
+        - containerPort: 8080
+        # Resource limits prevent one pod from crashing the whole node
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+        # This tells K8s if the app is actually running
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: time-service-svc
+spec:
+  selector:
+    app: time-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
