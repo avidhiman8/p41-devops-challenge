@@ -19,16 +19,22 @@ spec:
         image: avidhiman8/simple-time-service:v1
         ports:
         - containerPort: 8080
-        # Resource limits prevent one pod from crashing the whole node
         resources:
           limits:
-            cpu: "200m"
+            cpu: "250m"
             memory: "256Mi"
           requests:
             cpu: "100m"
             memory: "128Mi"
-        # This tells K8s if the app is actually running
+        # Restarts pod if app hangs
         livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        # Only sends traffic once app is ready
+        readinessProbe:
           httpGet:
             path: /
             port: 8080
